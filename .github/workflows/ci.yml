@@ -56,11 +56,11 @@ jobs:
       matrix:
         include:
           - triplet: x86-windows-static
-            vcpkgPackages: 'curl[ssl] discord-rpc libjpeg-turbo'
+            vcpkgPackages: 'curl[core,ssl] discord-rpc'
           - triplet: x64-windows-static
-            vcpkgPackages: 'curl[ssl] discord-rpc libjpeg-turbo'
+            vcpkgPackages: 'curl[core,ssl] discord-rpc'
           - triplet: arm64-windows-static
-            vcpkgPackages: 'curl[ssl] discord-rpc libjpeg-turbo'
+            vcpkgPackages: 'curl[core,ssl] discord-rpc'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
