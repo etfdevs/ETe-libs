@@ -56,12 +56,11 @@ jobs:
       matrix:
         include:
           - triplet: x86-windows-static
-            vcpkgPackages: 'curl discord-rpc freetype libjpeg-turbo'
+            vcpkgPackages: 'curl[ssl] discord-rpc libjpeg-turbo'
           - triplet: x64-windows-static
-            vcpkgPackages: 'curl discord-rpc freetype libjpeg-turbo'
+            vcpkgPackages: 'curl[ssl] discord-rpc libjpeg-turbo'
           - triplet: arm64-windows-static
-            # fribidi is disabled due to https://github.com/microsoft/vcpkg/issues/11248 [fribidi] Fribidi doesn't cross-compile on x86-64 to target arm/arm64
-            vcpkgPackages: 'curl discord-rpc freetype libjpeg-turbo'
+            vcpkgPackages: 'curl[ssl] discord-rpc libjpeg-turbo'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
