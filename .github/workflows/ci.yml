@@ -53,7 +53,7 @@ jobs:
           chcp 65001 #set code page to utf-8
           echo ("version=" + $env:GITHUB_REF.replace('refs/tags/v', '')) >> $env:GITHUB_ENV
       - name: Install vcpkg and packages
-        uses: lukka/run-vcpkg@v6
+        uses: lukka/run-vcpkg@v11
         id: runvcpkg
         with:
           vcpkgGitCommitId: '${{ env.VCPKG_COMMIT_HASH }}'
