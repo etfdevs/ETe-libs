@@ -1,24 +1,7 @@
 name: CI
-
-on:
-  # Run on pushes to tags, the "master" branch, and PR's
-  push:
-    tags-ignore:
-    branches:
-      - master
-    paths-ignore:
-      - '**.md'
-      - '*.txt'
-      - '.gitignore'
-      - 'docs/*'
-  pull_request:
-    paths-ignore:
-      - '**.md'
-      - '*.txt'
-      - '.gitignore'
-      - 'docs/*'
+on: [push, pull_request]
 env:
-  VCPKG_COMMIT_HASH: 8e1f46de11423e5f7d2395458f5252738ffffbbd
+  VCPKG_COMMIT_HASH: 8eb57355a4ffb410a2e94c07b4dca2dffbee8e50
 jobs:
   createrelease:
     name: createrelease
