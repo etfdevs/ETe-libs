@@ -121,6 +121,7 @@ jobs:
         uses: lukka/run-vcpkg@v6
         id: runvcpkg-x86
         with:
+          vcpkgGitCommitId: '${{ env.VCPKG_COMMIT_HASH }}'
           setupOnly: true
 
       - name: Install packages (x86)
@@ -138,11 +139,6 @@ jobs:
           vcpkgTriplet: '${{ matrix.triplet }}'
           vcpkgArguments: '${{ matrix.vcpkgPackages }}'
 
-      - name: Zip stuff
-        run: |
-          pushd ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}\\installed\\${{ matrix.triplet }}
-          7z a -tzip -mx9 -mtc=off ..\ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip "*"
-          popd
       - name: Upload zip as artifact
         uses: actions/upload-artifact@v2
         with:
