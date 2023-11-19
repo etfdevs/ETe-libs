@@ -65,7 +65,7 @@ jobs:
           7z a -tzip -mx9 -mtc=off ..\ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip "*"
           popd
       - name: Upload zip as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v6
         with:
           name: ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
           path: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}\\installed\\ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
