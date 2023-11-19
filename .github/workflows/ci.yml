@@ -139,11 +139,16 @@ jobs:
           vcpkgTriplet: '${{ matrix.triplet }}'
           vcpkgArguments: '${{ matrix.vcpkgPackages }}'
 
+      - name: Zip stuff
+        run: |
+          pushd ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}/installed/${{ matrix.triplet }}
+          7z a -tzip -mx9 -mtc=off ../ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip "*"
+          popd
       - name: Upload zip as artifact
         uses: actions/upload-artifact@v2
         with:
           name: ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
-          path: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}\\installed\\ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
+          path: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}/installed/ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
       - name: Load Release URL File from release job
         if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/download-artifact@v1
@@ -164,7 +169,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-          asset_path: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}\\installed\\ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
+          asset_path: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}/installed/ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
           asset_name: ete-libs-v${{ env.version }}-${{ matrix.triplet }}.zip
           asset_content_type: application/zip
           
