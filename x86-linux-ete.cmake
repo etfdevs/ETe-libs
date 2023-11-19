@@ -4,4 +4,4 @@ set(VCPKG_LIBRARY_LINKAGE static)
 
 set(VCPKG_CMAKE_SYSTEM_NAME Linux)
 
-set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE x86-linux-toolchain.cmake)
+set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{TOOLCHAIN_PATH}/x86-linux-toolchain.cmake)

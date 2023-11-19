@@ -127,6 +127,7 @@ jobs:
       - name: Install packages (x86)
         if: matrix.triplet == 'x86-linux-ete'
         run: |
+          export TOOLCHAIN_PATH='${{ github.workspace }}''
           export VCPKG_COMMIT_HASH='${{ env.VCPKG_COMMIT_HASH }}'
           ./linux_x86_build.sh
 
