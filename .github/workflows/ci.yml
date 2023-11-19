@@ -102,13 +102,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - triplet: x86-linux-ete
+          - triplet: x86-linux
             vcpkgPackages: 'curl[core,ssl] discord-rpc ijg-libjpeg sdl2'
           - triplet: x64-linux
             vcpkgPackages: 'curl[core,ssl] discord-rpc ijg-libjpeg sdl2'
           #- triplet: arm64-linux
           #  vcpkgPackages: 'curl[core,ssl] discord-rpc ijg-libjpeg sdl2'
     steps:
+      - name: Install tools (x86)
+        if: startsWith(matrix.triplet, 'x86')
+        run: |
+            sudo dpkg --add-architecture i386
+            sudo apt-get -qq update
+            sudo apt-get -y install gcc-multilib g++-multilib
       - name: Checkout
         uses: actions/checkout@v2
       - name: Get the version
@@ -116,23 +122,22 @@ jobs:
         run: |
           chcp 65001 #set code page to utf-8
           echo ("version=" + $env:GITHUB_REF.replace('refs/tags/v', '')) >> $env:GITHUB_ENV
-      - name: Setup vcpkg (x86)
-        if: matrix.triplet == 'x86-linux-ete'
-        uses: lukka/run-vcpkg@v6
-        id: runvcpkg-x86
-        with:
-          vcpkgGitCommitId: '${{ env.VCPKG_COMMIT_HASH }}'
-          setupOnly: true
+#      - name: Setup vcpkg (x86)
+#        if: startsWith(matrix.triplet, 'x86')
+#        uses: lukka/run-vcpkg@v6
+#        id: runvcpkg-x86
+#        with:
+#          vcpkgGitCommitId: '${{ env.VCPKG_COMMIT_HASH }}'
+#          setupOnly: true
 
-      - name: Install packages (x86)
-        if: matrix.triplet == 'x86-linux-ete'
-        run: |
-          export TOOLCHAIN_PATH='${{ github.workspace }}'
-          export VCPKG_COMMIT_HASH='${{ env.VCPKG_COMMIT_HASH }}'
-          ./linux_x86_build.sh
+      #- name: Install packages (x86)
+#        if: startsWith(matrix.triplet, 'x86')
+#        run: |
+#          export VCPKG_COMMIT_HASH='${{ env.VCPKG_COMMIT_HASH }}'
+#          ./linux_x86_build.sh
 
-      - name: Install vcpkg and packages (!x86)
-        if: matrix.triplet != 'x86-linux-ete'
+      - name: Install vcpkg and packages
+#        if: ! startsWith(matrix.triplet, 'x86')
         uses: lukka/run-vcpkg@v6
         id: runvcpkg
         with:
