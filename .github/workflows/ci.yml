@@ -116,13 +116,28 @@ jobs:
         run: |
           chcp 65001 #set code page to utf-8
           echo ("version=" + $env:GITHUB_REF.replace('refs/tags/v', '')) >> $env:GITHUB_ENV
-      - name: Install vcpkg and packages
+      - name: Setup vcpkg (x86)
+        if: matrix.triplet == 'x86-linux-ete'
+        uses: lukka/run-vcpkg@v6
+        id: runvcpkg-x86
+        with:
+          setupOnly: true
+
+      - name: Install packages (x86)
+        if: matrix.triplet == 'x86-linux-ete'
+        run: |
+          export VCPKG_COMMIT_HASH='${{ env.VCPKG_COMMIT_HASH }}'
+          ./linux_x86_build.sh
+
+      - name: Install vcpkg and packages (!x86)
+        if: matrix.triplet != 'x86-linux-ete'
         uses: lukka/run-vcpkg@v6
         id: runvcpkg
         with:
           vcpkgGitCommitId: '${{ env.VCPKG_COMMIT_HASH }}'
           vcpkgTriplet: '${{ matrix.triplet }}'
           vcpkgArguments: '${{ matrix.vcpkgPackages }}'
+
       - name: Zip stuff
         run: |
           pushd ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}\\installed\\${{ matrix.triplet }}
