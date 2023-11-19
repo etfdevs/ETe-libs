@@ -39,11 +39,11 @@ jobs:
       matrix:
         include:
           - triplet: x86-windows-static
-            vcpkgPackages: 'curl[core,ssl] discord-rpc libjpeg sdl2'
+            vcpkgPackages: 'curl[core,ssl] discord-rpc ijg-libjpeg sdl2'
           - triplet: x64-windows-static
-            vcpkgPackages: 'curl[core,ssl] discord-rpc libjpeg sdl2'
+            vcpkgPackages: 'curl[core,ssl] discord-rpc ijg-libjpeg sdl2'
           - triplet: arm64-windows-static
-            vcpkgPackages: 'curl[core,ssl] discord-rpc libjpeg sdl2'
+            vcpkgPackages: 'curl[core,ssl] discord-rpc ijg-libjpeg sdl2'
     steps:
       - name: Checkout
         uses: actions/checkout@v2

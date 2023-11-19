@@ -18,7 +18,7 @@ vcpkg/bootstrap-vcpkg.sh
 
 ARM_TRIPLET="--overlay-triplets=. --triplet=arm64-osx-ete"
 X64_TRIPLET="--overlay-triplets=. --triplet=x64-osx-ete"
-LIBRARIES="openssl discord-rpc libjpeg sdl2"
+LIBRARIES="openssl discord-rpc ijg-libjpeg sdl2"
 vcpkg/vcpkg install ${=ARM_TRIPLET} ${=LIBRARIES}
 vcpkg/vcpkg install ${=X64_TRIPLET} ${=LIBRARIES}
 
